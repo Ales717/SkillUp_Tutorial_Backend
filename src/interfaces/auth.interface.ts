@@ -7,16 +7,11 @@ export interface TokenPayload {
     type: JwtType
 }
 
-export interface REquestWithUser extends Request {
+export interface RequestWithUser extends Request {
     user: User
 }
 
 export enum JwtType {
     ACCESS_TOKEN = 'ACCESS_TOKEN',
-    REFRESH_TOKEN = 'REFRESH TOKEN'
-}
 
-export enum CookieType {
-    ACCESS_TOKEN = 'ACCESS_TOKEN',
-    REFRESH_TOKEN = 'REFRESH TOKEN'
 }

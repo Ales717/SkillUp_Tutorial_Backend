@@ -16,7 +16,7 @@ export abstract class AbstractService {
     }
   }
 
-  async findBy(condition, relations = []): Promise<any[]> {
+  async findBy(condition, relations = []): Promise<any> {
     try {
       return this.repository.findOne({
         where: condition,
@@ -24,7 +24,7 @@ export abstract class AbstractService {
       })
     } catch (error) {
       Logging.error(error)
-      throw new InternalServerErrorException(`Something went wrong while searching for an element with :${condition}}`)
+      throw new BadRequestException(`Something went wrong while searching for an element with condition: ${condition}.`)
     }
   }
 

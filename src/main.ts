@@ -1,9 +1,10 @@
-import { NestFactory } from '@nestjs/core'
-import { AppModule } from './modules/app.module'
 import { ValidationPipe } from '@nestjs/common'
+import { NestFactory } from '@nestjs/core'
 import cookieParser from 'cookie-parser'
 import express from 'express'
 import Logging from 'library/Logging'
+
+import { AppModule } from './modules/app.module'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -20,6 +21,6 @@ async function bootstrap() {
   const PORT = process.env.PORT || 8080
   await app.listen(PORT)
 
-  Logging.info(`App is listening on ${await app.getUrl()}`)
+  Logging.log(`App is listening on: ${await app.getUrl()}`)
 }
 bootstrap()

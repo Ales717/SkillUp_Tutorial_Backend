@@ -11,8 +11,8 @@ import { PostgresErrorCode } from 'helpers/postgresErrorCode.enum';
 
 @Injectable()
 export class UsersService extends AbstractService {
-    constructor(@InjectRepository(User) private readonly usersRepostiroy: Repository<User>) {
-        super(usersRepostiroy)
+    constructor(@InjectRepository(User) private readonly usersRepository: Repository<User>) {
+        super(usersRepository)
     }
 
     async create(createUserDto: CreateUserDto): Promise<User> {
@@ -21,8 +21,8 @@ export class UsersService extends AbstractService {
             throw new BadRequestException('User with that email already exists.')
         }
         try {
-            const newUser = this.usersRepostiroy.create({ ...createUserDto })
-            return this.usersRepostiroy.save(newUser)
+            const newUser = this.usersRepository.create({ ...createUserDto })
+            return this.usersRepository.save(newUser)
         } catch (error) {
             Logging.error(error)
             throw new BadRequestException('Something went wrong while creating a new user.')
@@ -51,7 +51,7 @@ export class UsersService extends AbstractService {
             Object.entries(data).map((entry) => {
                 user[entry[0] = entry[1]]
             })
-            return this.usersRepostiroy.save(user)
+            return this.usersRepository.save(user)
         } catch (error) {
             Logging.error(error)
             if (error?.code === PostgresErrorCode.UniqueViolation) {

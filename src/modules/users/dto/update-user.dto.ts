@@ -13,9 +13,6 @@ export class UpdateUserDto {
     email?: string
 
     @IsOptional()
-    refresh_token?: string
-
-    @IsOptional()
     role_id?: string
 
     @IsOptional()
@@ -23,7 +20,7 @@ export class UpdateUserDto {
 
     @ValidateIf((o) => typeof o.password === 'string' && o.password.lenght > 0)
     @IsOptional()
-    @Matches(/^(?=.*\d) [A-Za-z. \s_-]+[\w~@#$%^&*+=` | {} : ; ! . ?" ( ) [\]-]{6,}/, {
+    @Matches(/^(?=.*\d)[A-Za-z.\s_-]+[\w~@#$%^&*+=`|{}:;!.?"()[\]-]{6,}/, {
         message: 'Password must have al least one number, lower or upper case letter and it has to be longer than 5 characters.'
     })
     password?: string
