@@ -6,6 +6,9 @@ import { RegisterUserDto } from './dto/register-user.dto';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { RequestWithUser } from 'interfaces/auth.interface';
 import { Request, Response } from 'express'
+import { JwtAuthGuard } from './guards/jwt.guard';
+import { GetCurrentUser } from 'decorators/get-current-user.decorator';
+import { UserData } from 'interfaces/user.interface';
 
 @Controller('auth')
 @UseInterceptors(ClassSerializerInterceptor)
@@ -42,5 +45,6 @@ export class AuthController {
         res.clearCookie('access_token')
         return { msg: 'ok' }
     }
+
 }
 

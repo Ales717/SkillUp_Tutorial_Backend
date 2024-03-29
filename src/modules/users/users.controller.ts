@@ -7,6 +7,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { isFileExtensionSafe, removeFile, saveImageToStorage } from 'helpers/imageStorage';
 import { join } from 'path';
+import { HasPermission } from 'decorators/has-permission.decorator';
 
 
 @Controller('users')
@@ -18,7 +19,7 @@ export class UsersController {
     @Get()
     @HttpCode(HttpStatus.OK)
     async findAll(@Query('page') page: number): Promise<PeginatedResult> {
-        return this.userService.paginate(page)
+        return this.userService.paginate(page, ['role'])
     }
 
     @Get(':id')
@@ -49,7 +50,7 @@ export class UsersController {
         throw new BadRequestException('File content does not mathc extesion.')
     }
 
-    @Patch()
+    @Patch(':id')
     @HttpCode(HttpStatus.OK)
     async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto): Promise<User> {
         return this.userService.update(id, updateUserDto)

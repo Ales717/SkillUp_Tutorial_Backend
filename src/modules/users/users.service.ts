@@ -21,7 +21,7 @@ export class UsersService extends AbstractService {
             throw new BadRequestException('User with that email already exists.')
         }
         try {
-            const newUser = this.usersRepository.create({ ...createUserDto })
+            const newUser = this.usersRepository.create({ ...createUserDto, role: { id: createUserDto.role_id } })
             return this.usersRepository.save(newUser)
         } catch (error) {
             Logging.error(error)
@@ -30,10 +30,12 @@ export class UsersService extends AbstractService {
     }
 
     async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
-        const user = (await this.findById(id,)) as User
+        const user = (await this.findById(id)) as User
         const { email, password, confirm_password, role_id, ...data } = updateUserDto
         if (user.email !== email && email) {
             user.email = email
+        } else if (email && user.email === email) {
+            throw new BadRequestException('User with that email alredy exists.')
         }
         if (password && confirm_password) {
             if (password !== confirm_password) {
@@ -45,11 +47,11 @@ export class UsersService extends AbstractService {
             user.password = await hash(password)
         }
         if (role_id) {
-            // user.role = {...user.role, id: role_id}
+            user.role = { ...user.role, id: role_id }
         }
         try {
             Object.entries(data).map((entry) => {
-                user[entry[0] = entry[1]]
+                user[entry[0]] = entry[1]
             })
             return this.usersRepository.save(user)
         } catch (error) {
@@ -57,7 +59,7 @@ export class UsersService extends AbstractService {
             if (error?.code === PostgresErrorCode.UniqueViolation) {
                 throw new BadRequestException('User with that email already exists.')
             }
-            throw new InternalServerErrorException('Something went wrong while updating the user')
+            throw new InternalServerErrorException('Something went wrong while updating the user.')
         }
     }
     async updateUserImageId(id: string, avatar: string): Promise<User> {

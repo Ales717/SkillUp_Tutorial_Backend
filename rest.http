@@ -20,8 +20,57 @@ Content-Type: application/json
   	"password": "John123!"
 }
 
+
+### PATCH /users/:id
+PATCH http://localhost:8080/users/41e4057a-71e9-4a18-82f2-53edb680fa95 HTTP/1.1
+Content-Type: application/json
+
+{
+  	"role_id": "50cc8ef6-1477-4a80-be80-e17153aaa7db"
+}
+### GET /users
+GET http://localhost:8080/users HTTP/1.1
+
 ### GET /auth
 GET http://localhost:8080/auth HTTP/1.1
 
 ### POST /auth/signout
 POST http://localhost:8080/auth/signout HTTP/1.1
+
+### GET /users
+GET http://localhost:8080/users HTTP/1.1
+
+### GET /permissions
+GET http://localhost:8080/permissions
+
+### POST /permissions
+POST http://localhost:8080/permissions HTTP/1.1
+Content-Type: application/json
+
+{
+  	"name": "edit_permissions"
+}
+
+### GET /roles
+GET http://localhost:8080/roles HTTP/1.1
+
+### DELETE /roles/:id
+DELETE http://localhost:8080/roles/360beee1-87f9-478c-a88f-51f144c92fd2 HTTP/1.1
+
+### POST /roles
+POST http://localhost:8080/roles HTTP/1.1
+Content-Type: application/json
+
+{
+  	"name": "Viewer",
+    "permissions": ["52ba4be5-8448-477e-b5de-f72dee896495"]
+}
+
+### PATCH /roles/:id
+PATCH http://localhost:8080/roles/50cc8ef6-1477-4a80-be80-e17153aaa7db HTTP/1.1
+Content-Type: application/json
+
+{
+  	"name": "Admin",
+    "permissions": ["9baddf45-6c0b-451c-90bb-5a3ba8080312","188277b2-59d6-44c2-b8df-a5f1d6bc1db5"]
+}
