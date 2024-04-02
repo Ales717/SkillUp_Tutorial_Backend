@@ -10,6 +10,7 @@ import { PermissionsModule } from './permissions/permissions.module'
 import { PermissionGuard } from './permissions/guards/permission.guard'
 import { APP_GUARD } from '@nestjs/core'
 import { ProductsModule } from './products/products.module'
+import { OrdersModule } from './orders/orders.module'
 
 
 @Module({
@@ -24,7 +25,8 @@ import { ProductsModule } from './products/products.module'
     AuthModule,
     RolesModule,
     PermissionsModule,
-    ProductsModule
+    ProductsModule,
+    OrdersModule
   ],
   controllers: [],
   providers: [
