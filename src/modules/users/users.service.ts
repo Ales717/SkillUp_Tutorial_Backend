@@ -34,8 +34,6 @@ export class UsersService extends AbstractService {
         const { email, password, confirm_password, role_id, ...data } = updateUserDto
         if (user.email !== email && email) {
             user.email = email
-        } else if (email && user.email === email) {
-            throw new BadRequestException('User with that email alredy exists.')
         }
         if (password && confirm_password) {
             if (password !== confirm_password) {
@@ -62,6 +60,7 @@ export class UsersService extends AbstractService {
             throw new InternalServerErrorException('Something went wrong while updating the user.')
         }
     }
+
     async updateUserImageId(id: string, avatar: string): Promise<User> {
         const user = await this.findById(id)
         return this.update(user.id, { avatar })

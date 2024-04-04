@@ -60,9 +60,9 @@ export class UsersController {
         return this.userService.update(id, updateUserDto)
     }
 
-    @Delete()
+    @Delete(':id')
     @HttpCode(HttpStatus.OK)
-    async delete(@Param('id') id: string): Promise<User> {
+    async remove(@Param('id') id: string): Promise<User> {
         return this.userService.remove(id)
     }
 }
